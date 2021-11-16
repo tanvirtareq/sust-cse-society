@@ -18,8 +18,7 @@ function NavBar() {
     const classes=useStyles();
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
-            <Typography className={classes.heading} variant="h2" align='center' >Memories</Typography>
-            <img className={classes.image} src={memories} alt="memories" height="60" width="80" />
+            <Typography className={classes.heading} variant="h2" align='center' >SUST CSE Society</Typography>
             <GoogleLogin
                 clientId='1009985350274-qv47nfl0fkr8hfoh617mcuj13g750kkh.apps.googleusercontent.com'
                 buttonText='Login'
