@@ -14,7 +14,7 @@ export const createPost=(post)=> async(dispatch)=>{
     try {
         window.alert(JSON.stringify(post));
         const {data}=await api.createPost(post);
-        window.alert(JSON.stringify(data));
+        window.alert(JSON.stringify(data)+' data ');
         dispatch({type: 'CREATE', payload: data});
     } catch (error) {
         console.log(error);

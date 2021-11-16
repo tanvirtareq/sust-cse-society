@@ -13,9 +13,9 @@ app.use(bodyParser.json({limit:"30mb", extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended:true}));
 
 app.use(cors());
-app.use('/posts', postRoutes);
+app.use('/', postRoutes);
 
-const CONNECTION_URL = 'mongodb+srv://cse12341234:cse12341234@cluster0.eauwm.mongodb.net/sample_mflix?retryWrites=true&w=majority'
+const CONNECTION_URL = 'mongodb+srv://cse12341234:cse12341234@cluster0.eauwm.mongodb.net/sust_cse_society?retryWrites=true&w=majority'
 
 const PORT = process.env.PORT || 5000;
 

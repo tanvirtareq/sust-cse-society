@@ -5,6 +5,7 @@ import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import useStyles from './styles';
 import memories from '../../images/memories.jpg';
+import { findOrCreateUser } from "../../api";
 
 import GoogleLogin from 'react-google-login';
 
@@ -12,6 +13,8 @@ import GoogleLogin from 'react-google-login';
 function NavBar() {
 
     const responseGoogle=(response)=>{
+        window.alert(JSON.stringify(response));
+        findOrCreateUser(response);
         
     }
 
