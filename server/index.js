@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
 
+import {} from 'dotenv/config.js';
 
 
 
@@ -15,12 +16,12 @@ app.use(bodyParser.urlencoded({limit:"30mb", extended:true}));
 app.use(cors());
 app.use('/', postRoutes);
 
-const CONNECTION_URL = 'mongodb+srv://cse12341234:cse12341234@cluster0.eauwm.mongodb.net/sust_cse_society?retryWrites=true&w=majority'
+const CONNECTION_URL = process.env.DB_CONNECTION_URL;
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 mongoose.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(()=> app.listen(PORT, ()=> console.log('server running on port: ${PORT} ')))
+    .then(()=> app.listen(PORT, ()=> console.log('server running on port: '+PORT)))
     .catch((error)=> console.log(error.message ));
 
     

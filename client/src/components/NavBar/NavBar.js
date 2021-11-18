@@ -3,6 +3,8 @@ import React from "react";
 
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import { Link } from "react-router-dom";
+import {} from 'dotenv/config';
+
 import useStyles from './styles';
 import memories from '../../images/memories.jpg';
 import { findOrCreateUser } from "../../api";
@@ -23,7 +25,7 @@ function NavBar() {
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <Typography className={classes.heading} variant="h2" align='center' >SUST CSE Society</Typography>
             <GoogleLogin
-                clientId='1009985350274-qv47nfl0fkr8hfoh617mcuj13g750kkh.apps.googleusercontent.com'
+                clientId={process.env.GOOGLE_CLIENT_ID}
                 buttonText='Login'
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
