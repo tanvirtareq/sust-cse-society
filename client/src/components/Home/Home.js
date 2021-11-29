@@ -9,10 +9,10 @@ import {getPosts} from '../../actions/posts'
 
 
 function Home() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [dispatch]);
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(getPosts());
+    // }, [dispatch]);
 
     return (
         <Grow in>

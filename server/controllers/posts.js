@@ -1,6 +1,8 @@
 import PostMessage from "../models/postMessage.js";
 
 export const getPosts=async (req, res)=>{
+    console.log(req.cookies);
+    console.log(req.signedCookies);
     try {
         const postMessage= await PostMessage.find();
         // console.log(postMessage);
