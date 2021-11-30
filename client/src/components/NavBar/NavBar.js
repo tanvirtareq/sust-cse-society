@@ -15,39 +15,43 @@ import GoogleLogin from 'react-google-login';
 
 
 function NavBar() {
-    const [active, setActive] =useState("");
-    const [user , setUser] = useState();
-    const [uid, setUid]=useState();
+    // const [active, setActive] =useState("");
+    const profile=JSON.parse(localStorage.getItem('profile'));
+    const [user , setUser] = useState(profile);
+    // const [uid, setUid]=useState();
     let navigate=useNavigate();
 
-    useEffect(()=>{
-        const profile=JSON.parse(localStorage.getItem('profile'));
-        // profile?(
-        //     console.log(profile);
-        //     setUid(profile._id);
-        //     console.log(uid);
-        //     setUser(profile);
-        // ):
-        // (
-        //     console.log("nothing");
-        // )
-        profile?setUid(profile._id):setUid(null);
-        profile?setUser(profile):setUser(null);
+    // useEffect(()=>{
+    //     const profile=JSON.parse(localStorage.getItem('profile'));
+    //     // profile?(
+    //     //     console.log(profile);
+    //     //     setUid(profile._id);
+    //     //     console.log(uid);
+    //     //     setUser(profile);
+    //     // ):
+    //     // (
+    //     //     console.log("nothing");
+    //     // )
+    //     profile?setUid(profile._id):setUid(null);
+    //     profile?setUser(profile):setUser(null);
         
-    }, [uid]);
+    // }, [uid]);
+    
+    // setUser(profile);
 
     // localStorage.setItem("mytime", Date.now());
 
     const successResponseGoogle= async (response)=>{
         
-        const curUser=response.profileObj;
-        console.log(curUser);
+        // const curUser=response.profileObj;
+        // console.log(curUser);
         axios.post('http://localhost:5001/auth', response)
         .then((response)=>{
                 console.log(response);
                 localStorage.setItem('profile', JSON.stringify(response.data));
                 setUser(response.data);
-                setUid(response.data._id);
+                window.location.reload(false);
+                // setUid(response.data._id);
             }
         );
         // findOrCreateUser(response);
@@ -75,13 +79,14 @@ function NavBar() {
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <Typography className={classes.heading} variant="h2" align='center' >SUST CSE Society</Typography>
             {
-                uid?(
+                user?(
                     <div>
-                        <Avatar src={user.imageUrl} onClick={() => {navigate('/user/'+uid)}} />
+                        <Avatar src={user.imageUrl} onClick={() => {navigate('/user/'+user._id)}} />
                         <Button onClick={()=>{localStorage.removeItem('profile')
-                            setUid(null);
+                            // setUid(null);
                             setUser(null);
-                            navigate('/');
+                            window.location.reload(false);
+                            // navigate('/');
                         }}>LogOut</Button>
                     </div>
                 ):
