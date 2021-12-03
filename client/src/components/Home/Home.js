@@ -28,6 +28,7 @@ function Home() {
                 <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
                     <Grid item xs={12} sm={7} >
                         <Button onClick={()=>{navigate('/pollAnnouncements')}}>Poll Announcements</Button>
+                        <Button onClick={()=>{navigate('/runningElections')}}>Running Election</Button>
                         <Posts />
                     </Grid>
                     <Grid item xs={12} sm={4} >

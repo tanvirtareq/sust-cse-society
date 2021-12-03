@@ -1,29 +1,35 @@
 import mongoose from 'mongoose';
+import User from '../models/user.js';
+
+var user=User;
 
 var pollParticipantSchema=mongoose.Schema({
-    userId:String,
-    pollId:String,
-    pollCatagoryId:String,
+    userId:{type:mongoose.Schema.Types.ObjectId, ref:'user'},
+    pollId:{type:mongoose.Schema.Types.ObjectId, ref:'PollAnnouncement'},
+    pollCatagoryId:{type:mongoose.Schema.Types.ObjectId, ref:'PollCatagory'},
     transaction:String,
     vote:{type:Number, default:0}
 });
 
-export const PollParticipant=mongoose.model('pollParticipant', pollParticipantSchema);
+export const PollParticipant=mongoose.model('PollParticipant', pollParticipantSchema);
 
 var pollCatagorySchema=mongoose.Schema({
     catagory:String,
-    pollId:String,
-    participant:[String]
+    pollId:{type:mongoose.Schema.Types.ObjectId, ref:'PollAnnouncement'},
+    participant:[{type:mongoose.Schema.Types.ObjectId, ref:'PollParticipant'}],
+    voter:[{type:mongoose.Schema.Types.ObjectId, ref:'user'}]
 });
 
 
 const pollAnnouncementSchema=mongoose.Schema({
     Announcement: String,
-    Catagory:[String]
+    running:{type:Boolean, default:false},
+    finished:{type:Boolean, default:false},
+    Catagory:[{type:mongoose.Schema.Types.ObjectId, ref:'PollCatagory'}]
 });
 
-export const PollCatagory=mongoose.model('pollCatagory', pollCatagorySchema);
+export const PollCatagory=mongoose.model('PollCatagory', pollCatagorySchema);
 
-const PollAnnouncement=mongoose.model('pollAnnouncement', pollAnnouncementSchema);
+const PollAnnouncement=mongoose.model('PollAnnouncement', pollAnnouncementSchema);
 
 export default PollAnnouncement;

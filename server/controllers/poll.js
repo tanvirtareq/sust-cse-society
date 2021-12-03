@@ -1,4 +1,4 @@
-import PollAnnouncement from "../models/pollAnnouncement.js";
+import PollAnnouncement, { PollCatagory, PollParticipant } from "../models/pollAnnouncement.js";
 
 export const createPollAnnouncement=(req, res)=>{
     // console.log("aise");
@@ -8,15 +8,55 @@ export const createPollAnnouncement=(req, res)=>{
     for (var i in post.Catagory)
     {
         // console.log(i);
-        pollAnnouncement.Catagory.push({catagory:post.Catagory[i]});
+        var pollCatagory=PollCatagory({catagory:post.Catagory[i], pollId:pollAnnouncement._id});
+        pollAnnouncement.Catagory.push(pollCatagory._id);
+        PollCatagory.insertMany([pollCatagory], (err)=>{
+
+        });
+        // pollAnnouncement.Catagory.push({catagory:post.Catagory[i]});
     }
     PollAnnouncement.insertMany([pollAnnouncement], (err)=>{
     });
 }
 
 export const getPollAnnouncement= async (req, res)=>{
-    const Announcements=await PollAnnouncement.find();
-    res.status(201).json(Announcements);    
+
+    PollAnnouncement.find()
+    .populate('Catagory')
+    .exec((err, poll)=>{
+        if(err) console.log(err);
+        else{
+            console.log(poll);
+        }
+        res.status(201).json(poll);
+    });
+
+
+    // PollAnnouncement.find().then((docs)=>{
+    //     console.log(docs);
+    //     var ret=[];
+    //     for(var i in docs)
+    //     {
+    //        var announcement=docs[i].Announcement;
+    //        var catagory=[];
+    //        for(var j in docs[i].Catagory)
+    //        {
+    //         console.log(docs[i].Catagory[j]);
+    //            PollCatagory.findById(docs[i].Catagory[j]).then((doc2)=>{
+    //                     console.log(doc2);
+    //                     // catagory.push(doc2.catagory);
+    //            });
+    //            console.log("ses");
+                
+    //             // catagory.push(docs[i].Catagory[j]);
+    //        }
+    //        console.log(catagory);
+    //        ret.push({announcement:announcement, catagory:catagory});
+    //     }
+    //     res.status(201).json(ret);
+    // });
+    // // const Announcements=await PollAnnouncement.find();
+    // // res.status(201).json(Announcements);    
 }
 
 export const getPollDetails=async (req, res)=>{
@@ -24,15 +64,26 @@ export const getPollDetails=async (req, res)=>{
     var pollId=(req.params.id);
     console.log(pollId);
     var id='61a898479c7a82427d0e45b0';
-    PollAnnouncement.findById(pollId, function (err, docs) {
-        if (err){
-            console.log(err);
+    PollAnnouncement.findById(pollId)
+    .populate('Catagory')
+    .exec((err, poll)=>{
+        if(err)
+        {
+
         }
         else{
-            // console.log("Result : ", docs);
-            res.status(201).json(docs);
+            res.status(201).json(poll);
         }
     });
+    // PollAnnouncement.findById(pollId, function (err, docs) {
+    //     if (err){
+    //         console.log(err);
+    //     }
+    //     else{
+    //         // console.log("Result : ", docs);
+    //         res.status(201).json(docs);
+    //     }
+    // });
     // const details=await PollAnnouncement.findById(pollId);
     // res.status(201).json(details);
     // PollAnnouncement.findById(pollId)
@@ -49,15 +100,151 @@ export const applyForPoll=(req, res)=>{
     var transaction=req.body.transaction;
     var userId=req.body.user._id;
     var pollId=req.body.pollId;
-    console.log(catagory+' '+transaction+' '+userId+' '+pollId);
-    PollAnnouncement.find({_id:pollId}, function (err, docs) {
-        if (err){
-            console.log(err);
-        }
-        else{
-            // docs.Catagory.catagory()
-            console.log(docs);
-            res.status(201).json(docs);
+    PollParticipant.find({userId:userId})
+    .exec((err, docs)=>{
+        if(err)
+        {
+
+        }else if(docs.length==0)
+        {
+            PollCatagory.findOne({catagory:catagory, pollId:pollId})
+            .exec((err, catagoryDetails)=>{
+                if(err)
+                {
+
+                }
+                else{
+                    var pollCatagoryId=catagoryDetails._id;
+                    var pollParticipant=PollParticipant({userId:userId, pollId:pollId, pollCatagoryId:pollCatagoryId, transaction:transaction});
+                    console.log(pollParticipant);
+                    PollParticipant.insertMany([pollParticipant]);
+                    catagoryDetails.participant.push(pollParticipant._id);
+                    console.log(catagoryDetails);
+                    catagoryDetails.save();
+
+                    // var participant=catagoryDetails.participant;
+                    // participant.push(pollParticipant._id);
+                    // console.log(participant);
+                    // PollCatagory.save({_id:pollCatagoryId, participant:participant});
+                    // PollCatagory.findOne({_id:pollCatagoryId})
+                    // .exec((err, docs)=>{
+                    //     if(err)
+                    //     {
+
+                    //     }
+                    //     else 
+                    //     {
+                    //         console.log(docs);
+                    //     }
+                    // });
+                    // PollCatagory.updateOne({_id:pollCatagoryId}, {participant:participant});
+                }
+            });
         }
     });
+    // console.log(catagory+' '+transaction+' '+userId+' '+pollId);
+    
+    // var pollParticipant=PollParticipant({userId:userId, pollId:pollId, pollCatagoryId:})
+    // PollAnnouncement.find({_id:pollId}, function (err, docs) {
+    //     if (err){
+    //         console.log(err);
+    //     }
+    //     else{
+    //         // docs.Catagory.catagory()
+    //         console.log(docs);
+    //         res.status(201).json(docs);
+    //     }
+    // });
+}
+
+export const getRunningElections=(req, res)=>{
+    // console.log(req.body);
+    PollAnnouncement.find({running:true})
+    .populate({path:'Catagory', populate:{path:'participant', populate:{path:'userId'}}})
+    .exec((err, polls)=>{
+        if(err)
+        {
+
+        }else{
+            res.status(200).json(polls);
+        }
+    })
+
+    
+    // PollCatagory.find({'participant':{$exists:true, $ne:[]} })
+    // .populate('pollId')
+    // .populate({path:'participant', populate:{path:'userId'}})
+    // .exec((err, polls)=>{
+    //     if(err)
+    //     {
+
+    //     }else{
+    //         res.status(200).json(polls);
+    //     }
+    // })
+    // res.status(200).json(req.body);
+}
+
+export const handleVote=(req,res)=>{
+    // console.log(req.body);
+    // console.log(req.body);
+    const vote=req.body.vote;
+    const userId=req.body.userId;
+    const catagoryId=req.params.id;
+    PollCatagory.findById(catagoryId)
+    .populate({path:'participant', populate:{path:'userId'}})
+    .exec((err, docs)=>{
+        if(err)
+        {
+            // console.log(err);
+        }
+        else
+        {
+            if(!docs.voter.includes(userId))
+            {
+                var tt=docs.participant.find(d=>(d.userId.userId==vote)).vote;
+                var id=docs.participant.find(d=>(d.userId.userId==vote))._id;
+                console.log(id);
+                PollParticipant.findById(id)
+                .exec((err, part)=>{
+                    var tmp=part.vote;
+                    console.log(tmp);
+                    part.vote=tmp+1;
+                    console.log(part);
+                    docs.voter.push(userId);
+                    part.save();
+                    docs.save();
+                });
+                // docs.participant.find(d=>(d.userId.userId==vote)).vote=tt+1;
+                // console.log(docs.participant.find(d=>(d.userId.userId==vote)));
+                // docs.save();
+            }
+            
+        }
+    });
+}
+
+export const publishPollResult=(req, res)=>{
+    console.log(req.params.id);
+    const pollId=req.params.id;
+    PollAnnouncement.findOneAndUpdate({_id:pollId}, {finished:true, running:false}).exec((err, docs)=>{
+        res.status(201).json(docs);
+    });
+    // PollAnnouncement.findOne({_id:pollId}).exec((err, docs)=>{
+    //     if(err) console.log(err);
+    //     else
+    //     {
+    //         console.log(docs);
+    //     }
+    // });
+}
+
+export const getPollResults=(req, res)=>{
+    console.log(req.body);
+    PollAnnouncement.find({finished:true})
+    .populate({path:'Catagory', populate:{path:'participant', populate:{path:'userId'} } })
+    .populate({path:'Catagory', populate:{path:'voter', populate:{path:'userId'} } })
+    .exec((err, docs)=>{
+        res.status(200).json(docs);
+    })
 }
