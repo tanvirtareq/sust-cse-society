@@ -12,6 +12,9 @@ export const PollAnnouncement=(props)=>{
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {props.Announcement}
                     </Typography>
+                    <Typography sx={{fontSize:14}} gutterBottom>
+                        {props.Catagory.map(d=>(<li key={d._id} >{d.catagory}</li>))}
+                    </Typography>
                 </CardContent>
                 {props.user!=null && props.user.admin==false &&
                     <CardActions>

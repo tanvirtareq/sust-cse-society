@@ -8,7 +8,10 @@ function PollAnnouncementForm()
     let navigate=useNavigate();
     const profile=JSON.parse(localStorage.getItem('profile'));
     const [user , setUser] = useState(profile);
-    const [postData, setPostData] = useState("");
+    const [postData, setPostData] = useState({
+        Announcement:'',
+        Catagory:[]
+    });
     useEffect(()=>{
             if(user==null || user.admin==false)
             {
@@ -17,7 +20,7 @@ function PollAnnouncementForm()
         }
     );
     const handleSubmit = (e) => {
-        window.alert(postData);
+        window.alert(JSON.stringify(postData));
         axios.post('http://localhost:5001/pollAnnouncement', postData)
         .then((response)=>{
                 window.alert(response);
@@ -34,8 +37,16 @@ function PollAnnouncementForm()
                     variant='outlined'
                     label='Announcement'
                     fullWidth
-                    value={postData}
-                    onChange={(e) => setPostData(e.target.value)}
+                    value={postData.Announcement}
+                    onChange={(e) => setPostData({Announcement: e.target.value})}
+                />
+                <TextField
+                    name='Catagory'
+                    variant='outlined'
+                    label='Catagory'
+                    fullWidth
+                    value={postData.Catagory}
+                    onChange={(e) => postData.Catagory.push(e.target.value)}
                 />
                 <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>submit</Button>
             </form> 

@@ -21,7 +21,7 @@ export const PollAnnouncements=()=>{
     return (
         <div>
             <ul>
-                {pollAnnouncements.map(d => (<PollAnnouncement key={d._id} user={user} pollAnnouncementId={d._id} Announcement={d.Announcement} />))} 
+                {pollAnnouncements.map(d => (<PollAnnouncement key={d._id} user={user} pollAnnouncementId={d._id} Announcement={d.Announcement} Catagory={d.Catagory} />))} 
             </ul>
         </div>
     );
