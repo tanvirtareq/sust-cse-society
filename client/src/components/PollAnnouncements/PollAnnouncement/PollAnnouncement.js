@@ -9,8 +9,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { PlayArrow } from "@mui/icons-material";
 import axios from 'axios';
+import { styled } from '@mui/material';
 
 import ApplyDialog from '../../Voting/User/ApplyDialog';
+
+const CardPost = styled(Card)(({theme}) => ({
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: theme.spacing(2)  
+}));
 
 export const PollAnnouncement=(props)=>{
     // console.log(props.user);
@@ -37,7 +44,7 @@ export const PollAnnouncement=(props)=>{
     }
     return (
         <>
-        <Card sx={{ minWidth: 275 }}>
+        <CardPost sx={{maxWidth: 550}}>
             <CardContent>
                 <>
                     <Typography variant="h4">{poll.title}</Typography>
@@ -57,7 +64,7 @@ export const PollAnnouncement=(props)=>{
                     id={poll._id} />
                 </>
             </CardContent>
-        </Card>
+        </CardPost>
         <br/>
         <br/>
         </>

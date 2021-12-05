@@ -14,11 +14,19 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-
-
-
+import Divider from '@mui/material/Divider';
 import { useState, useEffect } from "react";
 import {useNavigate} from 'react-router-dom';
+
+
+const CardPost = styled(Card)(({theme}) => ({
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: theme.spacing(2)  
+}));
+
+
+
 
 const PollResultContainer = styled(Container)(({theme}) => ({
     paddingTop: theme.spacing(10),
@@ -94,6 +102,8 @@ const ShowParticipant=(props)=>{
     );
 }
 
+
+
 const ShowParticipants=(props)=>{
     let {participants}=props;
     participants=participants.sort((a, b)=>(b.vote-a.vote));
@@ -132,6 +142,7 @@ const ShowCatagory=(props)=>{
                 <ShowParticipants participants={catagory.participant}/>
                 {/* {catagory.participant.map(participant=>(<ShowParticipant participant={participant}/>))} */}
             </Collapse>
+            <Divider variant="middle" />
       </List>
     );
 }
@@ -140,7 +151,7 @@ const ShowResult=(props)=>{
     const {election}=props;
     return (
         <>
-        <Card sx={{ minWidth: 275 }}>
+        <CardPost sx={{maxWidth: 550}}>
         <CardContent>
             <Typography variant="h5" component="div">
             {
@@ -154,7 +165,7 @@ const ShowResult=(props)=>{
         {/* <CardActions>
             <Button size="small">Learn More</Button>
         </CardActions> */}
-        </Card>
+        </CardPost>
         <br/>
         <br/>
         </>
