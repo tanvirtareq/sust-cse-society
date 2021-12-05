@@ -14,5 +14,8 @@ export const Searchbox = styled('div')(({theme}) => ({
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
         width: 'auto',
+    },
+    [theme.breakpoints.down('sm')]: {
+        display:'none'
     }
 }));

@@ -1,24 +1,23 @@
 import { Event, Home, Logout, Message, Notifications, People, Poll } from "@mui/icons-material";
 import History from "@mui/icons-material/History";
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
-const ContainerLeftbar = styled(Box)(({ theme }) => ({
+const ContainerLeftbar = styled(Container)(({ theme }) => ({
     //paddingRight: theme.spacing(1),
     // backgroundColor: 'yellow',
     paddingTop: theme.spacing(10),
-    position: 'fixed'
+    height: '100vh',
+    position: 'sticky',
+    top: 0,
+    overflowY: 'scroll'
 }));
 
 const BoxItem = styled(Box)(({ theme }) => ({
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    marginBottom: theme.spacing(4),
     display: 'flex',
+    alignItems: 'center',
     width: '100%',
     //padding: theme.spacing(1),
     cursor: 'pointer'
@@ -31,7 +30,11 @@ const ItemIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2)
 }));
 
-
+const ResponsiveTypography = styled(Typography)(({theme}) => ({
+    [theme.breakpoints.down('md')]: {
+        display: 'none'
+    }
+}));
 
 
 const LeftBar = () => {
@@ -49,47 +52,47 @@ const LeftBar = () => {
             <Link to={'/'} >
                 <BoxItem>
                     <ItemIconWrapper> <Home /> </ItemIconWrapper>
-                    <Typography marginRight={'theme.spacing(2)'}>Home</Typography>
+                    <ResponsiveTypography marginRight={'theme.spacing(2)'}>Home</ResponsiveTypography>
                 </BoxItem>
             </Link>
             
             <BoxItem>
                 <ItemIconWrapper> <People /> </ItemIconWrapper>
-                <Typography>People</Typography>
+                <ResponsiveTypography>People</ResponsiveTypography>
             </BoxItem>
             <BoxItem>
                 <ItemIconWrapper> <Event /> </ItemIconWrapper>
-                <Typography>Events</Typography>
+                <ResponsiveTypography>Events</ResponsiveTypography>
             </BoxItem>
             <Link to={'/polls'}>
                 <BoxItem>
                     <ItemIconWrapper> <Poll /> </ItemIconWrapper>
-                    <Typography>Poll</Typography>
+                    <ResponsiveTypography>Poll</ResponsiveTypography>
                 </BoxItem>
             </Link>
             <Link to={'/pollAnnouncements'}>
                 <BoxItem>
                     <ItemIconWrapper> <Poll /> </ItemIconWrapper>
-                    <Typography>Poll Announcement</Typography>
+                    <ResponsiveTypography>Poll Announcement</ResponsiveTypography>
                 </BoxItem>
             </Link>
             <Link to={'/poll-history'}>
                 <BoxItem>
                     <ItemIconWrapper> <History /> </ItemIconWrapper>
-                    <Typography> Poll History </Typography>
+                    <ResponsiveTypography> Poll History </ResponsiveTypography>
                 </BoxItem>
             </Link>
             <BoxItem>   
                 <ItemIconWrapper><Notifications /></ItemIconWrapper>
-                <Typography>Notifications</Typography>
+                <ResponsiveTypography>Notifications</ResponsiveTypography>
             </BoxItem>
             <BoxItem>
                 <ItemIconWrapper><Message /></ItemIconWrapper>
-                <Typography>Messages</Typography>
+                <ResponsiveTypography>Messages</ResponsiveTypography>
             </BoxItem>
             <BoxItem onClick={handleLogout}>
                 <ItemIconWrapper><Logout /></ItemIconWrapper>
-                <Typography>Log out</Typography>
+                <ResponsiveTypography>Log out</ResponsiveTypography>
             </BoxItem>
         </ContainerLeftbar>
     );

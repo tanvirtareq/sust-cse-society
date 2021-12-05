@@ -126,7 +126,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Typography, styled, IconButton } from "@mui/material";
 import { Poll, PostAdd, Search } from "@mui/icons-material";
 import { Searchbox } from "./style/searchbar/Searchbox";
 import { StyledInputBase } from "./style/searchbar/StyledInputBase";
@@ -134,6 +134,32 @@ import { SearchIconWrapper } from "./style/searchbar/SearchIconWrapper";
 import { Iconbox } from "./style/iconbar/Iconbox";
 import PostDialog from "../PostDialog/PostDialog";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "../SignIn/cse-logo-cut.png"
+
+const ResponsiveSearch = styled(Search)(({ theme }) => ({
+    [theme.breakpoints.down('md')]: {
+        display: 'none'
+    }
+}));
+
+const ResponsiveButton = styled(Button)(({ theme }) => ({
+    [theme.breakpoints.down('md')]: {
+        display: 'none'
+    }
+}));
+
+const ResponsiveIconButton = styled(IconButton)(({ theme }) => ({
+    [theme.breakpoints.up('md')]: {
+        display: 'none'
+    }
+}));
+
+const ResponsiveTypography = styled(Typography)(({theme}) => ({
+    [theme.breakpoints.down('md')]: {
+        display: 'none'
+    },
+    padding: '0 1em'
+}));
 
 const NavBar = () => {
     const [open, setOpen] = useState(false);
@@ -175,12 +201,13 @@ const NavBar = () => {
     return (
         <AppBar position="fixed">
             <Toolbar>
-                <Typography variant="h6">
+                <img src={Logo} alt="logo" height={'40'} />
+                <ResponsiveTypography variant="h6">
                     CSE Society
-                </Typography>
+                </ResponsiveTypography>
                 <Searchbox>
                     <SearchIconWrapper> 
-                        <Search /> 
+                        <ResponsiveSearch /> 
                     </SearchIconWrapper>
 
                     <StyledInputBase 
@@ -195,26 +222,40 @@ const NavBar = () => {
                 <Box sx={{ flexGrow: 1 }} />
                 <Iconbox>
                     { user && user.admin && 
+                        <>
                         <Link to={"/create-poll"}>
-                            <Button 
+                            <ResponsiveButton 
                                 variant="contained" 
                                 disableElevation 
                                 startIcon={<Poll /> }
                                 >
                                 POLL MANAGEMENT
-                            </Button>
+                            </ResponsiveButton>
                         </Link>
                         
+                        <Link to={"/create-poll"}>
+                        <ResponsiveIconButton>
+                            <Poll style={{ fill: '#FFF' }} />
+                        </ResponsiveIconButton>
+                    </Link>
+                        </>
+                        
                     }
+
+                    <ResponsiveIconButton
+                        onClick={handleClickOpen}
+                    >
+                        <PostAdd style={{ fill: '#FFF' }} />
+                    </ResponsiveIconButton>
                                         
-                    <Button 
+                    <ResponsiveButton 
                         variant="contained" 
                         disableElevation 
                         startIcon={<PostAdd /> }
                         onClick={handleClickOpen}
                         >
                         Create post
-                    </Button>
+                    </ResponsiveButton>
                     <PostDialog open={open} onClose={handleClose} post={post} user={user} />
                 </Iconbox>
                 
