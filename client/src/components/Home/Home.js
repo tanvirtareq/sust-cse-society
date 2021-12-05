@@ -13,7 +13,7 @@ import { PollAnnouncements } from "../PollAnnouncements/PollAnnouncements.js";
 
 function Home() {
     // const dispatch = useDispatch();
-    // useEffect(() => {
+    // useEffect(() => {    
     //     dispatch(getPosts());
     // }, [dispatch]);
     let navigate=useNavigate();

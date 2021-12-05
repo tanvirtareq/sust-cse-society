@@ -3,26 +3,28 @@ import PollAnnouncement, { PollCatagory, PollParticipant } from "../models/pollA
 export const createPollAnnouncement=(req, res)=>{
     // console.log("aise");
     const post=req.body;
-    console.log(post.Catagory);
-    var pollAnnouncement=PollAnnouncement({Announcement:post.Announcement});
-    for (var i in post.Catagory)
+    // console.log(post);
+    var pollAnnouncement=PollAnnouncement({title:post.title, description:post.description});
+    console.log(post.catagory);
+    for (var i in post.catagory)
     {
         // console.log(i);
-        var pollCatagory=PollCatagory({catagory:post.Catagory[i], pollId:pollAnnouncement._id});
-        pollAnnouncement.Catagory.push(pollCatagory._id);
+        var pollCatagory=PollCatagory({catagory:post.catagory[i].label, pollId:pollAnnouncement._id});
+        pollAnnouncement.catagory.push(pollCatagory._id);
         PollCatagory.insertMany([pollCatagory], (err)=>{
-
+            if(err) console.log(err);
         });
         // pollAnnouncement.Catagory.push({catagory:post.Catagory[i]});
     }
     PollAnnouncement.insertMany([pollAnnouncement], (err)=>{
     });
+    res.status(201).json(pollAnnouncement);
 }
 
 export const getPollAnnouncement= async (req, res)=>{
 
-    PollAnnouncement.find()
-    .populate('Catagory')
+    PollAnnouncement.find({running:false, finished:false})
+    .populate('catagory')
     .exec((err, poll)=>{
         if(err) console.log(err);
         else{
@@ -95,12 +97,11 @@ export const getPollDetails=async (req, res)=>{
 }
 
 export const applyForPoll=(req, res)=>{
-    // console.log(req.body);
+    console.log(req.body);
     var catagory=req.body.catagory;
-    var transaction=req.body.transaction;
     var userId=req.body.user._id;
     var pollId=req.body.pollId;
-    PollParticipant.find({userId:userId})
+    PollParticipant.find({userId:userId, pollId:pollId})
     .exec((err, docs)=>{
         if(err)
         {
@@ -115,7 +116,7 @@ export const applyForPoll=(req, res)=>{
                 }
                 else{
                     var pollCatagoryId=catagoryDetails._id;
-                    var pollParticipant=PollParticipant({userId:userId, pollId:pollId, pollCatagoryId:pollCatagoryId, transaction:transaction});
+                    var pollParticipant=PollParticipant({userId:userId, pollId:pollId, pollCatagoryId:pollCatagoryId});
                     console.log(pollParticipant);
                     PollParticipant.insertMany([pollParticipant]);
                     catagoryDetails.participant.push(pollParticipant._id);
@@ -160,7 +161,7 @@ export const applyForPoll=(req, res)=>{
 export const getRunningElections=(req, res)=>{
     // console.log(req.body);
     PollAnnouncement.find({running:true})
-    .populate({path:'Catagory', populate:{path:'participant', populate:{path:'userId'}}})
+    .populate({path:'catagory', populate:{path:'participant', populate:{path:'userId'}}})
     .exec((err, polls)=>{
         if(err)
         {
@@ -240,11 +241,27 @@ export const publishPollResult=(req, res)=>{
 }
 
 export const getPollResults=(req, res)=>{
-    console.log(req.body);
+    // console.log(req.body);
+    // console.log("ase");
     PollAnnouncement.find({finished:true})
-    .populate({path:'Catagory', populate:{path:'participant', populate:{path:'userId'} } })
-    .populate({path:'Catagory', populate:{path:'voter', populate:{path:'userId'} } })
+    .populate({path:'catagory', populate:{path:'participant', populate:{path:'userId'} } })
+    .populate({path:'catagory', populate:{path:'voter', populate:{path:'userId'} } })
     .exec((err, docs)=>{
+        if(err) {
+
+        }
+        else
         res.status(200).json(docs);
     })
+}
+
+export const startPoll=async (req, res)=>{
+    // console.log(req.params);
+    const pollId=req.params.id;
+    console.log(pollId);
+    var rt=await PollAnnouncement.findByIdAndUpdate(pollId, {running:true});
+    if(rt)
+    {
+        res.status(200).json(rt);
+    }
 }

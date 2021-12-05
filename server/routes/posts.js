@@ -1,7 +1,7 @@
 import express from 'express';
 import { getPosts, createPost } from '../controllers/posts.js';
 import { getUser, getUserData, findOrCreateUser} from '../controllers/user.js';
-import {getPollResults, publishPollResult, createPollAnnouncement, getPollAnnouncement, getPollDetails, applyForPoll, getRunningElections, handleVote } from '../controllers/poll.js';
+import { startPoll, getPollResults, publishPollResult, createPollAnnouncement, getPollAnnouncement, getPollDetails, applyForPoll, getRunningElections, handleVote } from '../controllers/poll.js';
 
 
 const router=express.Router();
@@ -26,5 +26,10 @@ router.post('/voteFor/:id', handleVote);
 router.post('/publishPollResult/:id', publishPollResult);
 
 router.get('/pollResults', getPollResults);
+
+router.post('/startPoll/:id', startPoll);
+
+// router.get('finishedElections', getFinishedPolls);
+
 
 export default router;

@@ -22,10 +22,11 @@ var pollCatagorySchema=mongoose.Schema({
 
 
 const pollAnnouncementSchema=mongoose.Schema({
-    Announcement: String,
+    title:String,
+    description: String,
     running:{type:Boolean, default:false},
     finished:{type:Boolean, default:false},
-    Catagory:[{type:mongoose.Schema.Types.ObjectId, ref:'PollCatagory'}]
+    catagory:[{type:mongoose.Schema.Types.ObjectId, ref:'PollCatagory'}]
 });
 
 export const PollCatagory=mongoose.model('PollCatagory', pollCatagorySchema);
