@@ -99,7 +99,7 @@ export default function SignIn() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -108,8 +108,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-            />
-            <TextField
+            /> */}
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -118,27 +118,27 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
+            /> */}
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
-            <Button
+            /> */}
+            {/* <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
-            </Button>
-            <GoogleLogin
+            </Button> */}
+            <GoogleLogin fullWidth variant="contained"  sx={{ mt: 3, mb: 2 }}
               clientId='1009985350274-qv47nfl0fkr8hfoh617mcuj13g750kkh.apps.googleusercontent.com'
               buttonText='Login'
               onSuccess={successResponseGoogle}
               onFailure={failureResponseGoogle}
               cookiePolicy={'single_host_origin'}
-            />
-            <Grid container>
+            >Log In With Google</GoogleLogin>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -149,7 +149,7 @@ export default function SignIn() {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Box>
         </Box>
       </Container>

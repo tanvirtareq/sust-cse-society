@@ -215,7 +215,7 @@ const NavBar = () => {
                         >
                         Create post
                     </Button>
-                    <PostDialog open={open} onClose={handleClose} post={post} />
+                    <PostDialog open={open} onClose={handleClose} post={post} user={user} />
                 </Iconbox>
                 
             </Toolbar>

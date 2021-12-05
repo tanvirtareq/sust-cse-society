@@ -1,4 +1,6 @@
 import { alpha, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputBase, styled, Typography } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
 
 const PostInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -38,10 +40,24 @@ const PostInput = styled(InputBase)(({ theme }) => ({
 }));
 
 const PostDialog = (props) => {
-  const { open, onClose, post } = props;
+  const { open, onClose, post, user } = props;
+
+  const [val, setVal]=useState();
 
   const handleClose = () => {
     onClose(post);
+  };
+
+  const handlePost = async () => {
+    console.log(val);
+    var rt=await axios.post('http://localhost:5001/', {post:val, user:user});
+    if(rt)
+    {
+        console.log(rt);
+        window.alert(JSON.stringify(rt.data));
+        onClose(post);
+    }
+    // onClose(post);
   };
 
   return (
@@ -54,12 +70,15 @@ const PostDialog = (props) => {
           fullWidth
           multiline
           rows={5}
-          placeholder="Write anything you want..." />
+          placeholder="Write anything you want..." 
+          value={val}
+          onChange={(e)=>{setVal(e.target.value)}}
+          />
 
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Post</Button>
+        <Button onClick={handlePost}>Post</Button>
       </DialogActions>
     </Dialog>
   );
