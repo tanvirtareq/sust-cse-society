@@ -86,10 +86,13 @@ const LeftBar = () => {
                 <ItemIconWrapper><Notifications /></ItemIconWrapper>
                 <ResponsiveTypography>Notifications</ResponsiveTypography>
             </BoxItem>
-            <BoxItem>
-                <ItemIconWrapper><Message /></ItemIconWrapper>
-                <ResponsiveTypography>Messages</ResponsiveTypography>
-            </BoxItem>
+            <Link to={'/messenger'} >
+
+                <BoxItem>
+                    <ItemIconWrapper><Message /></ItemIconWrapper>
+                    <ResponsiveTypography>Messages</ResponsiveTypography>
+                </BoxItem>
+            </Link>
             <BoxItem onClick={handleLogout}>
                 <ItemIconWrapper><Logout /></ItemIconWrapper>
                 <ResponsiveTypography>Log out</ResponsiveTypography>

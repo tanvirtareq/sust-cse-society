@@ -3,6 +3,8 @@ import { getPosts, createPost } from '../controllers/posts.js';
 import { getUser, getUserData, findOrCreateUser} from '../controllers/user.js';
 import { startPoll, getPollResults, publishPollResult, createPollAnnouncement, getPollAnnouncement, getPollDetails, applyForPoll, getRunningElections, handleVote } from '../controllers/poll.js';
 
+import { getConversations, getConversation } from '../controllers/conversation.js';
+import { createMessage, getMessages } from '../controllers/message.js';
 
 const router=express.Router();
 
@@ -28,6 +30,14 @@ router.post('/publishPollResult/:id', publishPollResult);
 router.get('/pollResults', getPollResults);
 
 router.post('/startPoll/:id', startPoll);
+
+router.get('/getConversations/:userId', getConversations);
+
+router.get('/getConversation/:firstUserID/:secondUserID', getConversation);
+
+router.get('/getMessages/:conversationID', getMessages);
+
+router.post('/createMessage', createMessage);
 
 // router.get('finishedElections', getFinishedPolls);
 

@@ -46,6 +46,8 @@ import PollEventPage from "./components/Voting/User/PollEventPage";
 import PollResultPage from "./components/Voting/Admin/PollResultPage";
 import { PollAnnouncements } from './components/PollAnnouncements/PollAnnouncements';
 import VotePage from './components/Voting/User/VotePage';
+// import Messenger from './components/Messenger/Messenger.js';
+import Messenger from "./components/Messenger/Messenger";
 
 
 const App = () => {
@@ -59,6 +61,9 @@ const App = () => {
         <Route exact path="/create-poll" element={<><NavBar /> <AppBody component={<CreatePollPage /> } /></>} />
         <Route exact path="/manage-poll" element={<><NavBar /> <AppBody component={<ManagePollPage /> } /></>} />
         <Route path='/pollAnnouncements' exact element={<><NavBar /> <AppBody component={<PollAnnouncements/> } /></>}/>
+
+        {/* <Route path='/messenger' exact element={<Messenger/>} /> */}
+        <Route path='/messenger' exact element={<Messenger/>} />
       </Routes>
       
     </>
