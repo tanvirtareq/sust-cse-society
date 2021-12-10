@@ -1,17 +1,42 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './chatOnline.css';
 
-const ChatOnline=()=>{
+const ChatOnline=({onlineUser, currentID, setCurrentChat})=>{
+
+    const [onlineUserDetails, setOnlineUserDetails]=useState();
+    useEffect(()=>{
+        const getUserDetails= async ()=>{
+            console.log(onlineUser.userID);
+            const res=await axios.get('http://localhost:5001/user/'+onlineUser.userID);
+            if(res)
+            {
+                setOnlineUserDetails(res.data);
+            }
+        }
+        getUserDetails();
+    }, []);
+
+    const handleCurrentChat=async ()=>{
+        console.log(currentID, onlineUser.userID);
+        const res=await axios.get('http://localhost:5001/getConversation/'+onlineUser.userID+'/'+currentID);
+        if(res)
+        {
+            setCurrentChat(res.data);
+        }
+    }
+
     return (
-        <div className="chatOnline">
+        <div className="chatOnline" onClick={handleCurrentChat}>
             <div className="chatOnlineImgContainer">
                 <img
                 className="chatOnlineImg"
-                src='https://cdn.britannica.com/w:400,h:300,c:crop/84/73184-004-E5A450B5/Sunflower-field-Fargo-North-Dakota.jpg'
+                src={onlineUserDetails?.imageUrl}
                 alt=""
                 />
                 <div className="chatOnlineBadge"></div>
             </div>
-            <span className="chatOnlineName">tanvir</span>
+            <span className="chatOnlineName">{onlineUserDetails?.userId}</span>
         </div>
     );
 }

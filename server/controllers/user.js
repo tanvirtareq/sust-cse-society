@@ -16,8 +16,8 @@ export const getUser = async (req, res) => {
 export const getUserData = async (req, res) => {
     try {
         console.log(req.params);
-        const googleId=req.params.userId;
-        const user = await User.findOne({googleId: googleId});
+        const id=req.params.userId;
+        const user = await User.findOne({_id: id});
         res.status(200).json(user);
     } catch (error) {
     }

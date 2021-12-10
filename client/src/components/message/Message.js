@@ -1,5 +1,5 @@
 import './message.css'
-// import { format } from "timeago.js";
+import { format } from "timeago.js";
 
 const Message=({ message, own, src })=>{
   console.log(message);
@@ -14,7 +14,7 @@ const Message=({ message, own, src })=>{
         />
         <p className="messageText">{message.text}</p>
       </div>
-      <div className="messageBottom">{message.createdAt}</div>
+      <div className="messageBottom">{format(message.createdAt)}</div>
     </div>
   );
 }
