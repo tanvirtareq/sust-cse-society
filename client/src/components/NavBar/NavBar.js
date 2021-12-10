@@ -135,6 +135,7 @@ import { Iconbox } from "./style/iconbar/Iconbox";
 import PostDialog from "../PostDialog/PostDialog";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../SignIn/cse-logo-cut.png"
+import Avatar from '@mui/material/Avatar';
 
 const ResponsiveSearch = styled(Search)(({ theme }) => ({
     [theme.breakpoints.down('md')]: {
@@ -201,7 +202,9 @@ const NavBar = () => {
     return (
         <AppBar position="fixed">
             <Toolbar>
-                <img src={Logo} alt="logo" height={'40'} />
+                <Link to='/'>
+                    <img src={Logo} alt="logo" height={'40'} />
+                </Link>
                 <ResponsiveTypography variant="h6">
                     CSE Society
                 </ResponsiveTypography>
@@ -223,23 +226,23 @@ const NavBar = () => {
                 <Iconbox>
                     { user && user.admin && 
                         <>
-                        <Link to={"/create-poll"}>
-                            <ResponsiveButton 
-                                variant="contained" 
-                                disableElevation 
-                                startIcon={<Poll /> }
-                                >
-                                POLL MANAGEMENT
-                            </ResponsiveButton>
-                        </Link>
+                            <Link to={"/create-poll"}>
+                                <ResponsiveButton 
+                                    variant="contained" 
+                                    disableElevation 
+                                    startIcon={<Poll /> }
+                                    >
+                                    POLL MANAGEMENT
+                                </ResponsiveButton>
+                            </Link>
                         
-                        <Link to={"/create-poll"}>
-                        <ResponsiveIconButton>
-                            <Poll style={{ fill: '#FFF' }} />
-                        </ResponsiveIconButton>
-                    </Link>
+                            <Link to={"/create-poll"}>
+                                <ResponsiveIconButton>
+                                    <Poll style={{ fill: '#FFF' }} />
+                                </ResponsiveIconButton>
+                            </Link>
+                            
                         </>
-                        
                     }
 
                     <ResponsiveIconButton
@@ -257,6 +260,7 @@ const NavBar = () => {
                         Create post
                     </ResponsiveButton>
                     <PostDialog open={open} onClose={handleClose} post={post} user={user} />
+                    <Avatar alt={user?.userId} src={user?.imageUrl} />
                 </Iconbox>
                 
             </Toolbar>

@@ -3,6 +3,10 @@ import CardSimplePost from "../CardSimplePost/CardSimplePost";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+
 const ContainerFeed = styled(Container)(({ theme }) => ({
     paddingTop: theme.spacing(10),
     // backgroundColor: 'yellow',
@@ -32,7 +36,7 @@ const Feed = () => {
         console.log(rt);
         return rt;
     }
-
+    const tmp='# Hello, *world*!'
     return (
         <ContainerFeed>
             {

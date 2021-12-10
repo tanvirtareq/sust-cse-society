@@ -48,7 +48,7 @@ import { PollAnnouncements } from './components/PollAnnouncements/PollAnnounceme
 import VotePage from './components/Voting/User/VotePage';
 // import Messenger from './components/Messenger/Messenger.js';
 import Messenger from "./components/Messenger/Messenger";
-
+import ReactMarkdown from 'react-markdown'
 
 const App = () => {
   return (

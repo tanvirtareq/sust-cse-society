@@ -1,5 +1,13 @@
 import { CommentOutlined, MoreVert, Share, ThumbDownOutlined, ThumbUpOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, IconButton, styled, Typography } from "@mui/material";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css'
+
 
 const CardPost = styled(Card)(({ theme }) => ({
     marginLeft: 'auto',
@@ -34,7 +42,27 @@ const CardSimplePost = (props) => {
                 title={name}
                 subheader={date} />
             <CardContent>
-                <Typography variant='body1'> {post}</Typography>
+                <ReactMarkdown  children={post} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
+                    components={{
+                            code({node, inline, className, children, ...props}) {
+                                const match = /language-(\w+)/.exec(className || '')
+                                return !inline && match ? (
+                                <SyntaxHighlighter
+                                    children={String(children).replace(/\n$/, '')}
+                                    style={dark}
+                                    language={match[1]}
+                                    PreTag="div"
+                                    {...props}
+                                />
+                                ) : (
+                                <code className={className} {...props}>
+                                    {children}
+                                </code>
+                                )
+                            }
+                            }}
+                />
+                {/* <Typography variant='body1'> {post}</Typography> */}
             </CardContent>
             <CardActions>
                 <Box sx={{ flexGrow: 1 }} />
