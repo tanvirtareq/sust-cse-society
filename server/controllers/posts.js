@@ -28,7 +28,9 @@ import { Post, Comment } from "../models/post.js";
 
 export const getPosts=async (req, res)=>{
     
-    var ret=await Post.find().populate({path:'creator'});
+    var ret=await Post.find()
+    .sort({"createdAt":-1})
+    .populate({path:'creator'});
     if(ret)
     {
         res.status(201).json(ret);

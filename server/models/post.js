@@ -9,7 +9,11 @@ const comentSchema=mongoose.Schema({
     downvoter:[{type:mongoose.Schema.Types.ObjectId, ref:'user'}],
     reply:[{type:mongoose.Schema.Types.ObjectId, ref:'Comment'}],
     date:Date
-});
+},
+{
+    timestamps:true
+}
+);
 
 export const Comment=mongoose.model('comment', comentSchema);
 
@@ -20,6 +24,10 @@ const postSchema=mongoose.Schema({
     downvoter:[{type:mongoose.Schema.Types.ObjectId, ref:'user'}],
     comment:[{type:mongoose.Schema.Types.ObjectId, ref:'Comment'}],
     date:Date
-});
+},
+{
+    timestamps:true
+}
+);
 
 export const Post=mongoose.model('post', postSchema);
