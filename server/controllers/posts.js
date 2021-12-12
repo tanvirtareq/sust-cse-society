@@ -59,3 +59,30 @@ export const createPost=async (req, res)=>{
         res.status(409).json({message: error.message});
     }
 }
+
+export const getPostDetails=async (req, res)=>{
+    const postID=req.params.id;
+    var ret=await Post.findById(postID).populate({path:'creator'});
+    if(ret)
+    {
+        res.status(200).json(ret);
+    }
+}
+
+export const editPost=async (req, res)=>{
+    const postID=req.params.id;
+    const {post}=req.body;
+    const ret=await Post.findByIdAndUpdate(postID, {post:post});
+    if(ret)
+    {
+        res.status(200).json("Updated Successfully");
+    }
+}
+
+export const deletePost=async (req, res)=>{
+    const ret=await Post.findOneAndDelete(req.body);
+    if(ret)
+    {
+        res.status(200).json('successfully deleted');
+    }
+}

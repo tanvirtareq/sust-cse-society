@@ -1,6 +1,7 @@
 import { alpha, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputBase, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const PostInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
@@ -59,7 +60,11 @@ const PostDialog = (props) => {
     }
     // onClose(post);
   };
-
+  const handleGoToMarkdownEditor=()=>{
+    navigate('/markdownEditor');
+    onClose(post);
+  }
+  const navigate=useNavigate();
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>
@@ -77,6 +82,7 @@ const PostDialog = (props) => {
 
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleGoToMarkdownEditor}>Go to markdown editor</Button>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handlePost}>Post</Button>
       </DialogActions>

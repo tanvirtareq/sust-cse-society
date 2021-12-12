@@ -17,6 +17,7 @@ const ContainerFeed = styled(Container)(({ theme }) => ({
 
 const Feed = () => {
     const [feeds, setFeeds]=useState([]);
+    const profile=JSON.parse(localStorage.getItem('profile'));
 
     useEffect(()=>{
         axios.get('http://localhost:5001/').then((res)=>{
@@ -40,7 +41,13 @@ const Feed = () => {
     return (
         <ContainerFeed>
             {
-                feeds.length?(feeds.map(d=>(<CardSimplePost post={d.post} name={d.creator.userId} date={parseDate(d.date)} avaLink={d.creator.imageURL} />))):(
+                feeds.length?(feeds.map(d=>(<CardSimplePost 
+                    postDetails={d}
+                    currentUser={profile}
+                    post={d.post} name={d.creator.userId} date={parseDate(d.date)} avaLink={d.creator.imageURL}
+                    posts={feeds}
+                    setPosts={setFeeds}
+                     />))):(
                     <Typography>No Posts</Typography>
                 )
             }

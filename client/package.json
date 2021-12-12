@@ -19,6 +19,7 @@
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",
     "history": "^5.1.0",
+    "material-ui-markdown-editor": "^1.0.10",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -49,6 +49,11 @@ import VotePage from './components/Voting/User/VotePage';
 // import Messenger from './components/Messenger/Messenger.js';
 import Messenger from "./components/Messenger/Messenger";
 import ReactMarkdown from 'react-markdown'
+import MarkdownEditorPage from "./components/markdownEditorPage/markdownEditorPage";
+import PostDetails from "./components/postDetails/PostDetails";
+import ForkPost from "./components/forkPost/ForkPost";
+import EditPost from "./components/EditPost/EditPost";
+import SearchResult from "./components/SearchResult/SearchResult";
 
 const App = () => {
   return (
@@ -61,9 +66,13 @@ const App = () => {
         <Route exact path="/create-poll" element={<><NavBar /> <AppBody component={<CreatePollPage /> } /></>} />
         <Route exact path="/manage-poll" element={<><NavBar /> <AppBody component={<ManagePollPage /> } /></>} />
         <Route path='/pollAnnouncements' exact element={<><NavBar /> <AppBody component={<PollAnnouncements/> } /></>}/>
-
+        <Route path='/markdownEditor' exact element={<><NavBar /> <AppBody component={<MarkdownEditorPage/>} /></>} />
+        <Route path='/postDetails/:id' exact element={<><NavBar /> <AppBody component={<PostDetails/>} /></>} />
+        <Route path='/forkPost/:id' exact element={<><NavBar /> <AppBody component={<ForkPost/>} /></>} />
+        <Route path='/editPost/:id' exact element={<><NavBar /> <AppBody component={<EditPost/>} /></>} />
         {/* <Route path='/messenger' exact element={<Messenger/>} /> */}
         <Route path='/messenger' exact element={<Messenger/>} />
+        <Route exact path='/serach-result' element={<> <NavBar /> <AppBody component={ <SearchResult /> } /> </>} />
       </Routes>
       
     </>

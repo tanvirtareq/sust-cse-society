@@ -93,6 +93,12 @@ const LeftBar = () => {
                     <ResponsiveTypography>Messages</ResponsiveTypography>
                 </BoxItem>
             </Link>
+            <Link to={'/markdownEditor'} >
+                <BoxItem>
+                    <ItemIconWrapper><Message /></ItemIconWrapper>
+                    <ResponsiveTypography>Markdown Editor</ResponsiveTypography>
+                </BoxItem>
+            </Link>
             <BoxItem onClick={handleLogout}>
                 <ItemIconWrapper><Logout /></ItemIconWrapper>
                 <ResponsiveTypography>Log out</ResponsiveTypography>

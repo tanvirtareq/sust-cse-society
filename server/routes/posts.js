@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPosts, createPost } from '../controllers/posts.js';
+import { getPosts, createPost, getPostDetails, editPost, deletePost } from '../controllers/posts.js';
 import { getUser, getUserData, findOrCreateUser} from '../controllers/user.js';
 import { startPoll, getPollResults, publishPollResult, createPollAnnouncement, getPollAnnouncement, getPollDetails, applyForPoll, getRunningElections, handleVote } from '../controllers/poll.js';
 
@@ -10,6 +10,9 @@ const router=express.Router();
 
 router.get('/', getPosts);
 router.post('/', createPost);
+router.get('/postDetails/:id', getPostDetails);
+router.post('/editPost/:id', editPost);
+router.post('/deletePost', deletePost);
 
 router.get('/auth', getUser);
 router.post('/auth', findOrCreateUser);

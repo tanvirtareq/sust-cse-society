@@ -168,7 +168,8 @@ const NavBar = () => {
     const [user, setUser] = useState();
     const navigate=useNavigate();
     const [cnt, setCnt]=useState(0);
-
+    const [searchText, setSearchText] = useState("");
+    const navigateSearch = useNavigate();
     useEffect(()=>{
         const profile=JSON.parse(localStorage.getItem('profile'));
         profile?setUser(profile):navigate('/sign-in');
@@ -199,6 +200,17 @@ const NavBar = () => {
         setPost(value);
     };
 
+    const handleSearchButton = () => {
+        if(searchText !== ""){
+            navigateSearch('/search-result');
+        }
+    };
+
+    const handleSearchText = (e) => {
+        setSearchText(e.target.value);
+        console.log(searchText);
+    }
+
     return (
         <AppBar position="fixed">
             <Toolbar>
@@ -209,11 +221,13 @@ const NavBar = () => {
                     CSE Society
                 </ResponsiveTypography>
                 <Searchbox>
-                    <SearchIconWrapper> 
+                    {/* <SearchIconWrapper> 
                         <ResponsiveSearch /> 
-                    </SearchIconWrapper>
+                    </SearchIconWrapper> */}
 
                     <StyledInputBase 
+                    value={searchText}
+                    onChange={handleSearchText}
                     placeholder="Search…" 
                     inputProps={
                         { 
@@ -221,6 +235,9 @@ const NavBar = () => {
                         }
                     } 
                     />    
+                    <IconButton onClick={()=>{navigate('/search/')}}>
+                        <Search style={{fill: "#FFF"}} />
+                    </IconButton>
                 </Searchbox>
                 <Box sx={{ flexGrow: 1 }} />
                 <Iconbox>
