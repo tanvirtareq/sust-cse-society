@@ -12,6 +12,9 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css'
 import Button from '@mui/material/Button';
 
+import Split from 'react-split';
+
+
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -24,6 +27,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import './markdownEditorPage.css';
 import { Calculate } from "@mui/icons-material";
+import { margin } from "@mui/system";
  
 // injectTapEventPlugin();
 
@@ -40,7 +44,7 @@ const MarkdownViewer=(props)=>{
     const {value}=props;
     return (
         <ReactMarkdown  
-        style={{height: '100%'}}
+        style={{height: '100%', overflow:'auto'}}
         children={value} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
                 components={{
                         code({node, inline, className, children, ...props}) {
@@ -81,7 +85,7 @@ const MarkdownEditorPage = () => {
             if(rt)
             {
                 console.log(rt);
-                window.alert(JSON.stringify(rt.data));
+                window.alert('Post Shared Successfully');
             }
         }
         
@@ -90,8 +94,23 @@ const MarkdownEditorPage = () => {
 
     return (
         <ContainerFeed>
-            <Button variant="outlined"  onClick={handlePost}>Create Post</Button>
-            <div className="container" >
+            {/* <Button variant="outlined"  onClick={handlePost}>Create Post</Button> */}
+            <Split className="container"
+            >
+                <div className="textEditor">
+                    <textarea
+                    style={{ width:'calc(99.3%)', height:'calc(99.3%)', resize:'none', borderRadius:'0px', border:'0px'}}
+                    value={value}
+                    onChange={(e)=>{setValue(e.target.value)}}
+                    />
+                </div>
+                <div className="markdownViewer">
+                    <MarkdownViewer
+                    value={value}/>
+                </div>
+            </Split>
+            <Button variant="outlined"  onClick={handlePost} style={{margin:'3px'}} >Create Post</Button>
+            {/* <div className="container" >
                 <div className="textEditor">
                     <TextareaAutosize
                     minRows={10}
@@ -105,7 +124,7 @@ const MarkdownEditorPage = () => {
                     value={value}/>
                 </div>
                 
-            </div>
+            </div> */}
            
         </ContainerFeed>
     );

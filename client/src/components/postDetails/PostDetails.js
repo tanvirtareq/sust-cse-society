@@ -11,6 +11,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css'
 import Button from '@mui/material/Button';
+import Split from 'react-split';
 
 
 import React from 'react'
@@ -39,35 +40,33 @@ const ContainerFeed = styled(Container)(({ theme }) => ({
     overflow: 'auto',
     
 }));
-
 const MarkdownViewer=(props)=>{
     const {value}=props;
     return (
-        <div className="markdownViewer">
-            <ReactMarkdown  children={value} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
-                    components={{
-                            code({node, inline, className, children, ...props}) {
-                                const match = /language-(\w+)/.exec(className || '')
-                                return !inline && match ? (
-                                <SyntaxHighlighter
-                                    children={String(children).replace(/\n$/, '')}
-                                    style={dark}
-                                    language={match[1]}
-                                    PreTag="div"
-                                    {...props}
-                                />
-                                ) : (
-                                <code className={className} {...props}>
-                                    {children}
-                                </code>
-                                )
-                            }
-                            }}
-                />
-        </div>
+        <ReactMarkdown  
+        style={{height: '100%', overflow:'auto'}}
+        children={value} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
+                components={{
+                        code({node, inline, className, children, ...props}) {
+                            const match = /language-(\w+)/.exec(className || '')
+                            return !inline && match ? (
+                            <SyntaxHighlighter
+                                children={String(children).replace(/\n$/, '')}
+                                style={dark}
+                                language={match[1]}
+                                PreTag="div"
+                                {...props}
+                            />
+                            ) : (
+                            <code className={className} {...props}>
+                                {children}
+                            </code>
+                            )
+                        }
+                        }}
+            />
     );
 }
-
 const PostDetails = () => {
     // window.alert(props);
     // console.log(props);
@@ -100,26 +99,22 @@ const PostDetails = () => {
 
     return (
         <ContainerFeed>
-            <Avatar src={post?.creator?.imageUrl}/>
-            <Typography> {post?.creator?.userId} </Typography>
-            <br/>
-            <Button variant="outlined"  onClick={handleForkPost}>Fork Post</Button>
-            <div className="container" >
-                {/* <div className="textEditor">
-                    {value}
-                </div> */}
+            {/* <Button variant="outlined"  onClick={handlePost}>Create Post</Button> */}
+            <Split className="container"
+            >
                 <div className="textEditor">
-                    <TextareaAutosize readOnly
-                    minRows={10}
-                    style={{ width:'100%', height:'100%'}}
+                    <textarea readOnly
+                    style={{ width:'calc(99.3%)', height:'calc(99.3%)', resize:'none', borderRadius:'0px', border:'0px'}}
                     value={value}
+                    onChange={(e)=>{setValue(e.target.value)}}
                     />
                 </div>
-                
-                <MarkdownViewer
-                value={value}/>
-            </div>
-           
+                <div className="markdownViewer">
+                    <MarkdownViewer
+                    value={value}/>
+                </div>
+            </Split>
+            <Button variant="outlined"  onClick={handleForkPost} style={{margin:'3px'}} >Fork Post</Button>
         </ContainerFeed>
     );
 };

@@ -4,7 +4,7 @@
 // import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // import NavBar from "./components/NavBar/NavBar";
-import Home from "./components/Home/Home";
+// import Home from "./components/Home/Home";
 // import Auth from './components/Auth/Auth';
 // import UserProfile from './components/UserProfile/UserProfile';
 // import PollAnnouncementForm from './components/PollAnnouncementForm/PollAnnouncementForm';
@@ -46,7 +46,6 @@ import PollEventPage from "./components/Voting/User/PollEventPage";
 import PollResultPage from "./components/Voting/Admin/PollResultPage";
 import { PollAnnouncements } from './components/PollAnnouncements/PollAnnouncements';
 import VotePage from './components/Voting/User/VotePage';
-// import Messenger from './components/Messenger/Messenger.js';
 import Messenger from "./components/Messenger/Messenger";
 import ReactMarkdown from 'react-markdown'
 import MarkdownEditorPage from "./components/markdownEditorPage/markdownEditorPage";
@@ -54,6 +53,9 @@ import PostDetails from "./components/postDetails/PostDetails";
 import ForkPost from "./components/forkPost/ForkPost";
 import EditPost from "./components/EditPost/EditPost";
 import SearchResult from "./components/SearchResult/SearchResult";
+import ProfilePage from "./components/Profile/ProfilePage";
+import People from "./components/People/People";
+import LeftBar from "./components/LeftBar/LeftBar";
 
 const App = () => {
   return (
@@ -70,9 +72,12 @@ const App = () => {
         <Route path='/postDetails/:id' exact element={<><NavBar /> <AppBody component={<PostDetails/>} /></>} />
         <Route path='/forkPost/:id' exact element={<><NavBar /> <AppBody component={<ForkPost/>} /></>} />
         <Route path='/editPost/:id' exact element={<><NavBar /> <AppBody component={<EditPost/>} /></>} />
-        {/* <Route path='/messenger' exact element={<Messenger/>} /> */}
-        <Route path='/messenger' exact element={<Messenger/>} />
-        <Route exact path='/serach-result' element={<> <NavBar /> <AppBody component={ <SearchResult /> } /> </>} />
+        <Route path='/messenger/:uid1/:uid2' exact element={<Messenger/>} />
+        <Route path='/messenger/' exact element={<Messenger/>} />
+
+        <Route path='/profile/:id' exact element={ <><NavBar /> <AppBody component={<ProfilePage/>} /></>}/>
+        <Route path='/people/' exact element={ <><NavBar /> <AppBody component={<People/>} /></>}/>
+        <Route exact path='/search-result/:id' element={<> <NavBar /> <AppBody component={ <SearchResult /> } /> </>} />
       </Routes>
       
     </>

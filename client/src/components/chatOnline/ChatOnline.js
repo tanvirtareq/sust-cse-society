@@ -27,7 +27,7 @@ const ChatOnline=({onlineUser, currentID, setCurrentChat})=>{
     }
 
     return (
-        <div className="chatOnline" onClick={handleCurrentChat}>
+        <div className="chatOnlineFriend" onClick={handleCurrentChat}>
             <div className="chatOnlineImgContainer">
                 <img
                 className="chatOnlineImg"

@@ -41,7 +41,7 @@ const PostInput = styled(InputBase)(({ theme }) => ({
 }));
 
 const PostDialog = (props) => {
-  const { open, onClose, post, user } = props;
+  const { open, onClose, post, user} = props;
 
   const [val, setVal]=useState();
 
@@ -55,7 +55,8 @@ const PostDialog = (props) => {
     if(rt)
     {
         console.log(rt);
-        window.alert(JSON.stringify(rt.data));
+        window.alert("Post Shared Successfully");
+        window.location.reload(false);
         onClose(post);
     }
     // onClose(post);

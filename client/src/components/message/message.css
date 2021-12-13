@@ -6,6 +6,8 @@
   
   .messageTop{
       display: flex;
+      align-items: center;
+
   }
   
   .messageImg {
@@ -18,7 +20,7 @@
   
   .messageText{
       padding: 10px;
-      border-radius: 20px;
+      border-radius: 15px;
       background-color: #1877f2;
       color: white;
       max-width: 300px;

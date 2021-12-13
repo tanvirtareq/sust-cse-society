@@ -21,7 +21,7 @@ const theme = createTheme();
 
 
 export default function SignIn() {
-
+    localStorage.removeItem('profile');
 
   const [user, setUser] = useState();
     const navigate=useNavigate();

@@ -55,7 +55,12 @@ export const createPost=async (req, res)=>{
         var rt=await newPost.save();
         if(rt) 
         {
-            res.status(201).json('Post Shared Successfully');
+            var ret=await newPost.populate('creator');
+            if(ret)
+            {
+                res.status(201).json(ret);
+            }
+            
         } 
     } catch (error) {
         res.status(409).json({message: error.message});
@@ -86,5 +91,19 @@ export const deletePost=async (req, res)=>{
     if(ret)
     {
         res.status(200).json('successfully deleted');
+    }
+}
+
+export const searchPost=async (req, res)=>{
+    const {searchText}=req.params;
+    console.log(searchText);
+    var rgx=new RegExp(searchText);
+    console.log(rgx);
+    var ret=await Post.find({post: {$regex:  rgx, $options: 'i'} })
+    .sort({"createdAt":-1})
+    .populate({path:'creator'});
+    if(ret)
+    {
+        res.status(200).json(ret);
     }
 }

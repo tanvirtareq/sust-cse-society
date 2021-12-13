@@ -202,7 +202,8 @@ const NavBar = () => {
 
     const handleSearchButton = () => {
         if(searchText !== ""){
-            navigateSearch('/search-result');
+            searchText.replace(' ', '%20');
+            navigateSearch('/search-result/'+searchText);
         }
     };
 
@@ -235,7 +236,7 @@ const NavBar = () => {
                         }
                     } 
                     />    
-                    <IconButton onClick={()=>{navigate('/search/')}}>
+                    <IconButton onClick={handleSearchButton}>
                         <Search style={{fill: "#FFF"}} />
                     </IconButton>
                 </Searchbox>
@@ -276,8 +277,10 @@ const NavBar = () => {
                         >
                         Create post
                     </ResponsiveButton>
-                    <PostDialog open={open} onClose={handleClose} post={post} user={user} />
-                    <Avatar alt={user?.userId} src={user?.imageUrl} />
+                    <PostDialog open={open} onClose={handleClose} post={post} user={user}/>
+                    <Link to={'/profile/'+user?._id} >
+                        <Avatar alt={user?.userId} src={user?.imageUrl} />
+                    </Link>
                 </Iconbox>
                 
             </Toolbar>

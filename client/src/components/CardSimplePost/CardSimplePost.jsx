@@ -1,5 +1,5 @@
-import { CommentOutlined, MoreVert, Share, ThumbDownOutlined, ThumbUpOutlined } from "@mui/icons-material";
-import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, IconButton, styled, Typography } from "@mui/material";
+import { CommentOutlined, MoreVert, PostAddRounded, Share, ThumbDown, ThumbDownOutlined, ThumbUp, ThumbUpOutlined } from "@mui/icons-material";
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Collapse, IconButton, styled, TextField, Typography } from "@mui/material";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
@@ -15,6 +15,17 @@ import axios from 'axios';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <ResponsiveButton {...other} />;
+})(({ theme, expand }) => ({
+    //transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    //marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));
 
 
 const CardPost = styled(Card)(({ theme }) => ({
@@ -38,6 +49,9 @@ const ResponsiveIconButton = styled(IconButton)(({ theme }) => ({
 const CardSimplePost = (props) => {
     var { currentUser, postDetails ,post, name, date, avatarLink, posts, setPosts } = props;
     const navigate=useNavigate();
+    const [upvote, setUpvote] = useState(false);
+    const [downvote, setDownvote] = useState(false);
+    const [expanded, setExpanded] = useState(false);
     // console.log(avat)
     console.log(postDetails);
     console.log(currentUser);
@@ -65,6 +79,28 @@ const CardSimplePost = (props) => {
         handleClose();
     }
 
+    const handleCommentClick = () => {
+        setExpanded(!expanded);
+    }
+
+    const handleUpvoteReaction = () => {
+        if (!upvote) {
+            setUpvote(true);
+            setDownvote(false);
+        } else {
+            setUpvote(false);
+        }
+    }
+
+    const handleDownvoteReaction = () => {
+        if (!downvote) {
+            setUpvote(false);
+            setDownvote(true);
+        } else {
+            setDownvote(false);
+        }
+    }
+
     const handleDeletePost=async ()=>{
         const ret=await axios.post('http://localhost:5001/deletePost', {_id:postDetails._id});
         if(ret)
@@ -80,7 +116,7 @@ const CardSimplePost = (props) => {
     return (
         <CardPost sx={{ maxWidth: 700 }} >
             <CardHeader
-                avatar={<Avatar src={postDetails.creator.imageUrl} />}   
+                avatar={<Avatar src={postDetails?.creator?.imageUrl} />}   
                 action={
                     <>
 
@@ -141,19 +177,48 @@ const CardSimplePost = (props) => {
             </CardContent>
             <CardActions>
                 <Box sx={{ flexGrow: 1 }} />
-                <ResponsiveButton size="small" startIcon={<ThumbUpOutlined />}>Upvote</ResponsiveButton>
+                <ResponsiveButton size="small"
+                    startIcon={upvote ? <ThumbUp /> : <ThumbUpOutlined />}
+                    onClick={handleUpvoteReaction} >
+                    Upvote
+                </ResponsiveButton>
                 <ResponsiveIconButton><ThumbUpOutlined /></ResponsiveIconButton>
                 <Box sx={{ flexGrow: 1 }} />
-                <ResponsiveButton size="small" startIcon={<ThumbDownOutlined />}>Downvote</ResponsiveButton>
+                <ResponsiveButton size="small"
+                    startIcon={downvote ? <ThumbDown /> : <ThumbDownOutlined />}
+                    onClick={handleDownvoteReaction}>
+                    Downvote
+                </ResponsiveButton>
                 <ResponsiveIconButton><ThumbDownOutlined /></ResponsiveIconButton>
                 <Box sx={{ flexGrow: 1 }} />
-                <ResponsiveButton size="small" startIcon={<CommentOutlined />}>Comment</ResponsiveButton>
-                <ResponsiveIconButton><CommentOutlined /></ResponsiveIconButton>
-                <Box sx={{ flexGrow: 1 }} />
-                <ResponsiveButton size="small" startIcon={<Share />}>Share</ResponsiveButton>
-                <ResponsiveIconButton><Share /></ResponsiveIconButton>
+                <ExpandMore
+                    expand={expanded}
+                    onClick={handleCommentClick}
+                    size="small"
+                    startIcon={<CommentOutlined />}
+                    aria-expanded={expanded}
+                    aria-label="comment">
+
+                    Comment
+
+                </ExpandMore>
+
                 <Box sx={{ flexGrow: 1 }} />
             </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                    <Box
+                        display='flex'>
+                        <Avatar sx={{ width: 24, height: 24 }} src="/broken-image.jpg" />
+                        <Box sx={{ flexGrow: 1, marginLeft: 2 }}>
+                            <TextField fullWidth variant='standard' placeholder="Add a public comment..." />
+                        </Box>
+
+                        <IconButton> <PostAddRounded /> </IconButton>
+                    </Box>
+                    {/* Fetch comments from database here */}
+                </CardContent>
+            </Collapse>
         </CardPost>
     );
 };

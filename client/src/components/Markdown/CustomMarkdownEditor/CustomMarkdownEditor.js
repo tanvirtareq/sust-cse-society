@@ -11,7 +11,9 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css'
 import Button from '@mui/material/Button';
+
 import Split from 'react-split';
+
 
 
 import React from 'react'
@@ -23,12 +25,9 @@ import 'codemirror/lib/codemirror.css' // import codemirror styles
 import 'material-ui-markdown-editor/dist/MarkdownEditor/codemirrorOverride.css' // import override styles
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-import { useParams } from "react-router-dom";
-
-import '../markdownEditorPage/markdownEditorPage.css';
-
+import './markdownEditorPage.css';
 import { Calculate } from "@mui/icons-material";
-import MarkdownEditorPage from "../markdownEditorPage/markdownEditorPage";
+import { margin } from "@mui/system";
  
 // injectTapEventPlugin();
 
@@ -68,28 +67,11 @@ const MarkdownViewer=(props)=>{
             />
     );
 }
-const ForkPost = () => {
+
+const CustomMarkdownEditor = () => {
     const [feeds, setFeeds]=useState([]);
     const [value, setValue]=useState();
     const profile=JSON.parse(localStorage.getItem('profile'));
-    const {id}=useParams();
-    const [post, setPost]=useState();
-
-    useEffect(()=>{
-        const getPostDetails=async()=>{
-            var ret=await axios.get('http://localhost:5001/postDetails/'+id)
-            console.log(ret);
-            if(ret)
-            {
-                setValue(ret.data.post);
-                setPost(ret.data);
-                console.log(value);
-            }
-        }
-        getPostDetails();
-    }, []);
-    
-
     const handlePost = async () => {
         const user=profile;
         console.log(user);
@@ -103,7 +85,7 @@ const ForkPost = () => {
             if(rt)
             {
                 console.log(rt);
-                window.alert("Post Shared Successfully");
+                window.alert(JSON.stringify(rt.data));
             }
         }
         
@@ -132,4 +114,4 @@ const ForkPost = () => {
     );
 };
 
-export default ForkPost;
+export default CustomMarkdownEditor;

@@ -6,12 +6,17 @@ import Conversation from "../conversations/Conversation.js";
 import Message from "../message/Message.js";
 import ChatOnline from "../chatOnline/ChatOnline";
 import{io} from 'socket.io-client';
+import { useParams } from "react-router-dom";
+import { ConnectingAirportsOutlined } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 
 
 const Messenger=()=>{
 
+    const {uid1,uid2}=useParams();
+
     const [conversations, setConversations] = useState([]);
-    const [currentChat, setCurrentChat] = useState(null);
+    const [currentChat, setCurrentChat] = useState();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -23,6 +28,27 @@ const Messenger=()=>{
     const profile=JSON.parse(localStorage.getItem('profile'));
     console.log(profile);
     const [user, setUser]=useState(profile);
+
+    useEffect(()=>{
+      console.log(uid1);
+      console.log(uid2);
+      if(uid1 && uid2 && uid1==profile?._id)
+      {
+        console.log('aise');
+          const getChat=async ()=>{
+            console.log(uid1+" "+uid2);
+              var ret=await axios.get('http://localhost:5001/getConversation/'+uid1+'/'+uid2);
+              if(ret)
+              {
+                console.log(ret);
+                setCurrentChat(ret.data);
+              }
+             
+          }
+          getChat();
+      }
+
+    }, [])
 
     useEffect(() => {
       socket.current = io("ws://localhost:8900");
@@ -177,6 +203,7 @@ const Messenger=()=>{
           </div>
             </div>
             <div className="chatOnline">
+              <Typography> Online </Typography>
               {
                 onlineUsers.map((onlineUser)=>(
                   <ChatOnline  onlineUser={onlineUser} currentID={user?._id} setCurrentChat={setCurrentChat} />

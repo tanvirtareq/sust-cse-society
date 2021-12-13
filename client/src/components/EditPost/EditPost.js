@@ -11,13 +11,13 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css'
 import Button from '@mui/material/Button';
+import Split from 'react-split';
 
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // import injectTapEventPlugin from 'react-tap-event-plugin'
-import MarkdownEditor from 'material-ui-markdown-editor'
 import 'codemirror/lib/codemirror.css' // import codemirror styles
 import 'material-ui-markdown-editor/dist/MarkdownEditor/codemirrorOverride.css' // import override styles
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -28,6 +28,7 @@ import { useNavigate } from "react-router";
 import '../markdownEditorPage/markdownEditorPage.css';
 
 import { Calculate } from "@mui/icons-material";
+import MarkdownEditorPage from "../markdownEditorPage/markdownEditorPage";
  
 // injectTapEventPlugin();
 
@@ -43,7 +44,9 @@ const ContainerFeed = styled(Container)(({ theme }) => ({
 const MarkdownViewer=(props)=>{
     const {value}=props;
     return (
-        <ReactMarkdown  children={value} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
+        <ReactMarkdown  
+        style={{height: '100%', overflow:'auto'}}
+        children={value} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}
                 components={{
                         code({node, inline, className, children, ...props}) {
                             const match = /language-(\w+)/.exec(className || '')
@@ -110,7 +113,7 @@ const EditPost = () => {
             if(rt)
             {
                 console.log(rt);
-                window.alert(JSON.stringify(rt.data));
+                window.alert('Post Updated Successfully');
             }
         }
         
@@ -119,12 +122,12 @@ const EditPost = () => {
 
     return (
         <ContainerFeed>
-            <Button variant="outlined"  onClick={handleEditPost}>Edit Post</Button>
-            <div className="container" >
+            {/* <Button variant="outlined"  onClick={handlePost}>Create Post</Button> */}
+            <Split className="container"
+            >
                 <div className="textEditor">
-                    <TextareaAutosize
-                    minRows={10}
-                    style={{ width:'100%', height:'100%'}}
+                    <textarea
+                    style={{ width:'calc(99.3%)', height:'calc(99.3%)', resize:'none', borderRadius:'0px', border:'0px'}}
                     value={value}
                     onChange={(e)=>{setValue(e.target.value)}}
                     />
@@ -133,7 +136,8 @@ const EditPost = () => {
                     <MarkdownViewer
                     value={value}/>
                 </div>
-            </div>
+            </Split>
+            <Button variant="outlined"  onClick={handleEditPost} style={{margin:'3px'}} >Update Post</Button>
            
         </ContainerFeed>
     );

@@ -57,3 +57,15 @@ export const findOrCreateUser = async (req, res) => {
 
     // });
 }
+
+export const searchUser=async(req, res)=>{
+    const {searchText}=req.params;
+    console.log(searchText);
+    var rgx=new RegExp(searchText);
+    console.log(rgx);
+    var ret=await User.find({userId: {$regex:  rgx, $options: 'i'} });
+    if(ret)
+    {
+        res.status(200).json(ret);
+    }
+}

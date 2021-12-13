@@ -1,4 +1,4 @@
-import { Event, Home, Logout, Message, Notifications, People, Poll } from "@mui/icons-material";
+import { Code, Event, Home, Logout, Message, Notifications, People, Poll } from "@mui/icons-material";
 import History from "@mui/icons-material/History";
 import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material";
@@ -11,7 +11,7 @@ const ContainerLeftbar = styled(Container)(({ theme }) => ({
     height: '100vh',
     position: 'sticky',
     top: 0,
-    overflowY: 'scroll'
+    overflowY: 'auto'
 }));
 
 const BoxItem = styled(Box)(({ theme }) => ({
@@ -55,15 +55,17 @@ const LeftBar = () => {
                     <ResponsiveTypography marginRight={'theme.spacing(2)'}>Home</ResponsiveTypography>
                 </BoxItem>
             </Link>
+            <Link to={ '/people'} >
+                <BoxItem>
+                    <ItemIconWrapper> <People /> </ItemIconWrapper>
+                    <ResponsiveTypography>People</ResponsiveTypography>
+                </BoxItem>
+            </Link>
             
-            <BoxItem>
-                <ItemIconWrapper> <People /> </ItemIconWrapper>
-                <ResponsiveTypography>People</ResponsiveTypography>
-            </BoxItem>
-            <BoxItem>
+            {/* <BoxItem>
                 <ItemIconWrapper> <Event /> </ItemIconWrapper>
                 <ResponsiveTypography>Events</ResponsiveTypography>
-            </BoxItem>
+            </BoxItem> */}
             <Link to={'/polls'}>
                 <BoxItem>
                     <ItemIconWrapper> <Poll /> </ItemIconWrapper>
@@ -82,10 +84,10 @@ const LeftBar = () => {
                     <ResponsiveTypography> Poll History </ResponsiveTypography>
                 </BoxItem>
             </Link>
-            <BoxItem>   
+            {/* <BoxItem>   
                 <ItemIconWrapper><Notifications /></ItemIconWrapper>
                 <ResponsiveTypography>Notifications</ResponsiveTypography>
-            </BoxItem>
+            </BoxItem> */}
             <Link to={'/messenger'} >
 
                 <BoxItem>
@@ -95,14 +97,17 @@ const LeftBar = () => {
             </Link>
             <Link to={'/markdownEditor'} >
                 <BoxItem>
-                    <ItemIconWrapper><Message /></ItemIconWrapper>
+                    <ItemIconWrapper><Code /></ItemIconWrapper>
                     <ResponsiveTypography>Markdown Editor</ResponsiveTypography>
                 </BoxItem>
             </Link>
-            <BoxItem onClick={handleLogout}>
-                <ItemIconWrapper><Logout /></ItemIconWrapper>
-                <ResponsiveTypography>Log out</ResponsiveTypography>
-            </BoxItem>
+            <Link to={'/sign-in'}>
+                <BoxItem >
+                    <ItemIconWrapper><Logout /></ItemIconWrapper>
+                    <ResponsiveTypography>Log out</ResponsiveTypography>
+                </BoxItem>
+            </Link>
+            
         </ContainerLeftbar>
     );
 };
