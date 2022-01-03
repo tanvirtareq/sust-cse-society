@@ -19,4 +19,4 @@ A Social media for an organization.
 
 
 
-[![Demo](https://img.youtube.com/vi/XgmCoddebYY/0.jpg)](https://www.youtube.com/watch?v=XgmCoddebYY)
+[![Demo](https://img.youtube.com/vi/XgmCoddebYY/0.jpg)](https://youtu.be/jVkZpumILq4)
