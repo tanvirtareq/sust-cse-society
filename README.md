@@ -16,7 +16,11 @@ A Social media for an organization.
   - ![inlinemathanimated](https://user-images.githubusercontent.com/49305110/145910753-2fb3fd12-4b21-45c6-b2fb-9212363f47c2.gif)
 
 
+##  Used Technologies:
 
+React.js, Node.js, express.js, socket.io, mongodb
 
+## Overview
+The detailed overview of the app and how to use it can be found in the following video. Click the thumbnail below to watch it on Youtube:
 
 [![Demo](https://img.youtube.com/vi/jVkZpumILq4/0.jpg)](https://youtu.be/jVkZpumILq4)
